@@ -11,7 +11,8 @@ Ejecuta el siguiente comando para obtener la imagen oficial de MySQL:
 $ docker pull mysql:latest
 
 ## 2. Crear y ejecutar el contenedor de MySQL
-Ejecuta un contenedor en segundo plano con el nombre 'mysql', montando un volumen y exponiendo el puerto 33060
+Ejecuta un contenedor en segundo plano con el nombre 'mysql', montando un volumen y exponiendo el puerto 33060:
+
 $ docker run -dit --name mysql -v mysql-data:/var/lib/mysql -p 33060:3306 mysql:latest
 
 ## 3. Verificar que el contenedor esté corriendo
