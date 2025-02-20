@@ -20,14 +20,22 @@ $ docker ps
 
 ## 4. Iniciar el servidor MySQL en modo seguro
 $ docker exec -it mysql mysqld_safe & 
+
 o
+
 $ docker exec -it mysql bash
+
 $$ mysqld_safe &
+
 ## 5. Acceder a la consola de MySQL como usuario root
 $ docker exec -it mysql mysql -uroot -p
+
 o
+
 $ docker exec -it mysql bash
+
 $$ mysqld_safe &
+
 $$ mysql -uroot -p
 
 ## 6. Apagar el servidor MySQL de forma segura
