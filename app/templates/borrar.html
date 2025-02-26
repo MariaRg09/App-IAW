@@ -1,0 +1,19 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% if session['username'] %}
+    <h2>Borrar Taquilla</h2>
+    <form method="post" action="/borrar">
+        <input type="text" name="numero_taquilla" placeholder="Número de taquilla a borrar" required>
+        <button type="submit">Borrar</button>
+    </form>
+
+    {% if mensaje %}
+    <div>
+        {{ mensaje }}
+    </div>
+    {% endif %}
+{% else %}
+    Debe estar conectado para borrar una taquilla.
+{% endif %}
+{% endblock %}

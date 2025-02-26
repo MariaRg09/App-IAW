@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0-debian
+    container_name: lockers_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: usuario
+      MYSQL_DATABASE: lockers_db
+      MYSQL_USER: user_lockers_db
+      MYSQL_PASSWORD: usuario
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./app/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
+
+  flask-app:
+    build: .
+    container_name: flask_lockers
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=user_lockers_db
+      - DB_PASSWORD=usuario
+      - DB_NAME=lockers_db
+    env_file:
+      - .venv
+
+volumes:
+  mysql_data:

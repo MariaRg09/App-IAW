@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prestamo de taquillas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div>
+        <h1>Bienvenido al Sistema de Préstamo de Taquillas</h1>
+
+        <!-- Menú -->
+        <nav>
+            <a href="/login">Login</a>
+            <a href="/registro">Registro</a>
+        </nav>
+
+        <hr>
+        {% if session['username'] %}
+            <p>Conectado como {{ username }} <a href="/logout">Logout</a></p>
+            <hr> 
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

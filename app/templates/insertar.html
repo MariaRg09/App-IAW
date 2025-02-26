@@ -1,0 +1,23 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% if session['username'] %}
+
+    <h2>Agregar Nueva Taquilla</h2>
+    <form method="POST" action="/insertar">
+        <div>
+            <label for="number">Número de Taquilla:</label>
+            <input type="number" id="number" name="number" required>
+        </div>
+        <button type="submit">Agregar</button>
+    </form>
+
+    {% if mensaje %}
+    <div class="mensaje"></div>
+        {{ mensaje }}
+    </div>
+    {% endif %}
+{% else %}
+    <p>Debe estar conectado para insertar un contacto.</p>
+{% endif %}
+{% endblock %}

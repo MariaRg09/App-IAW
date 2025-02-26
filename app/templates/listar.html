@@ -1,0 +1,35 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% if session['username'] %}
+<h2>Taquillas Disponibles</h2>
+{% if lockers %}
+<table>
+    <tr>
+        <th>Número</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+    {% for locker in lockers %}
+    <tr>
+        <td>{{ locker.number }}</td>
+        <td>{{ locker.status }}</td>
+        <td>
+            {% if locker.status == 'disponible' %}
+                <a href="{{ url_for('insertar', locker_id=locker.id) }}">Reservar</a>
+            {% elif locker.user_id == session['user_id'] %}
+                <a href="{{ url_for('borrar', locker_id=locker.id) }}">Liberar</a>
+            {% else %}
+                Ocupado
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p>No hay taquillas disponibles en este momento.</p>
+{% endif %}
+{% else %}
+    <p>Debe estar conectado para ver la lista de taquillas.</p>
+{% endif %}
+{% endblock %}
