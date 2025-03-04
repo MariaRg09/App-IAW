@@ -63,6 +63,16 @@ $ docker exec -it mysql bash
 ```bash
 $ nano config.py
 ```
+3. Contenido del archivo **config.py**.
+```bash
+DB_CONFIG= {
+    'host': '10.3.29.20',
+    'port': 33060,
+    'user': 'user_gr6',
+    'password': 'usuario',
+    'database': 'gr6_db'
+}
+```
 
 ***NOTA**: Os proporciono lo que debe contener el archivo [config.py](app/config.py)*
 
