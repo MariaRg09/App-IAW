@@ -1,15 +1,15 @@
 services:
   db:
     image: mysql:8.0-debian
-    container_name: lockers_db
+    container_name: gr6_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: usuario
-      MYSQL_DATABASE: lockers_db
-      MYSQL_USER: user_lockers_db
+      MYSQL_DATABASE: gr6_db
+      MYSQL_USER: user_gr6
       MYSQL_PASSWORD: usuario
     ports:
-      - "3307:3306"
+      - "33070:33060"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./app/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
@@ -23,13 +23,13 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=user_lockers_db
+      - DB_HOST=10.3.29.20
+      - DB_PORT=33060
+      - DB_USER=user_gr6
       - DB_PASSWORD=usuario
-      - DB_NAME=lockers_db
+      - DB_NAME=gr6_db
     env_file:
-      - .venv
+      - taquillas-env
 
 volumes:
   mysql_data:
