@@ -43,13 +43,13 @@ $ source taquillas-env/bin/activate
 ```
 4. Instalamos flask, pymysql, werkzeug y jinja2:
 ```bash
-(venv)$ pip install flask pymysql 
+(taquillas-env)$ pip install flask pymysql 
 ```
 ***NOTA**: Al ejecutar este comando se instala flask, pymysql, Werkzeug,Jinja2, itsdangerous, click, blinker y MarkupSafe por predeterminado.*
 
-O bien podemos instalar los paquetes que hay dentro del archivo [requirements.txt](https://github.com/MariaRg09/App-IAW/blob/main/requirements.txt).
+O bien podemos instalar los paquetes que hay dentro del archivo [requirements.txt](requirements.txt).
 ```bash
-(venv)$ pip install -r requirements.txt
+(taquillas-env)$ pip install -r requirements.txt
 ```
 ### *Paso 2: Configurar base de datos a utilizar*
 
@@ -234,7 +234,7 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 ```
-***NOTA:** Podemos encontrar el código completo en [app.py](app/app.py).*
+***NOTA:** Podemos encontrar el código COMPLETO en [app.py](app/app.py).*
 
 ### *Paso 4: Crear el Dockerfile*
 
