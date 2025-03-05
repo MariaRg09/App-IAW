@@ -104,35 +104,35 @@ $ python test_db.py
 ```bash
 $ mysql -h 10.3.29.20 -P 33060 -u user_gr6 -p
 ```
-5.1. Utilizamos la base de datos creada anteriormente.
+5. 1. Utilizamos la base de datos creada anteriormente.
 ```mysql
-$ USE gr6_db;
+mysql> USE gr6_db;
 ```
-5.2.  Creamos las tablas que la aplicación va a utilizar.
+5. 2.  Creamos las tablas que la aplicación va a utilizar.
 ```mysql
 
-CREATE TABLE usuarios (
-id INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(100) NOT NULL,
-email VARCHAR(100) UNIQUE NOT NULL,
-contraseña VARCHAR(255) NOT NULL
-);
+mysql> CREATE TABLE usuarios (
+     > id INT AUTO_INCREMENT PRIMARY KEY,
+     > nombre VARCHAR(100) NOT NULL,
+     > email VARCHAR(100) UNIQUE NOT NULL,
+     > contraseña VARCHAR(255) NOT NULL
+     > );
 
-CREATE TABLE taquillas (
-id INT AUTO_INCREMENT PRIMARY KEY,
-numero INT UNIQUE NOT NULL,
-estado ENUM('libre', 'ocupada') DEFAULT 'libre'
-);
+mysql> CREATE TABLE taquillas (
+     > id INT AUTO_INCREMENT PRIMARY KEY,
+     > numero INT UNIQUE NOT NULL,
+     > estado ENUM('libre', 'ocupada') DEFAULT 'libre'
+     > );
 
-CREATE TABLE prestamos (
-id INT AUTO_INCREMENT PRIMARY KEY,
-usuario_id INT,
-taquilla_id INT,
-fecha\_prestamo TIMESTAMP DEFAULT CURRENT\_TIMESTAMP,
-fecha_devolucion TIMESTAMP NULL,
-FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-FOREIGN KEY (taquilla_id) REFERENCES taquillas(id)
-);
+mysql> CREATE TABLE prestamos (
+     > id INT AUTO_INCREMENT PRIMARY KEY,
+     > usuario_id INT,
+     > taquilla_id INT,
+     > fecha\_prestamo TIMESTAMP DEFAULT CURRENT\_TIMESTAMP,
+     > fecha_devolucion TIMESTAMP NULL,
+     > FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+     > FOREIGN KEY (taquilla_id) REFERENCES taquillas(id)
+     > );
 
 ```
 **NOTA**: Se encuentran en el archivo [db_init.sql](app/db_init.sql).
