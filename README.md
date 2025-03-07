@@ -114,7 +114,6 @@ mysql> USE gr6_db;
 mysql> CREATE TABLE usuarios (
      > id INT AUTO_INCREMENT PRIMARY KEY,
      > nombre VARCHAR(100) NOT NULL,
-     > email VARCHAR(100) UNIQUE NOT NULL,
      > contraseña VARCHAR(255) NOT NULL
      > );
 
@@ -128,7 +127,7 @@ mysql> CREATE TABLE prestamos (
      > id INT AUTO_INCREMENT PRIMARY KEY,
      > usuario_id INT,
      > taquilla_id INT,
-     > fecha\_prestamo TIMESTAMP DEFAULT CURRENT\_TIMESTAMP,
+     > fecha_prestamo TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
      > fecha_devolucion TIMESTAMP NULL,
      > FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
      > FOREIGN KEY (taquilla_id) REFERENCES taquillas(id)
@@ -267,33 +266,7 @@ if __name__ == "__main__":
 ```
 ***NOTA:** Podemos encontrar el código COMPLETO en [app.py](app/app.py).*
 
-### *Paso 4: Crear el Dockerfile*
-
-Este archivo define cómo se construirá el contenedor de la aplicación por lo que tendría que estar en el mismo directorio que **app.py**.
-
-En este paso, creamos el archivo [```Dockerfile```](Dockerfile) que contendrá lo siguiente:
-```Dockerfile
-# Utilizamos una imagen base de Python (versión 3.9 en este ejemplo)
-FROM python:3.9-slim
-
-# Establecer el directorio de trabajo en el contenedor
-WORKDIR /app
-
-# Copiar el archivo de dependencias e instalar
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copiar todo el código de la aplicación
-COPY . .
-
-# Exponer el puerto en el que se ejecutará la aplicación (ajusta según tu app)
-EXPOSE 8000
-
-# Comando para iniciar la aplicación (asegúrate de que "app.py" sea el entry point y defina la variable "app")
-CMD ["python", "app.py"]
-```
-
-### *Paso 5: Configurar docker-compose.yml*
+### Paso 4: Configurar docker-compose.yml*
 
 Para este paso, crearemos un archivo llamado [```compose.yml```](compose.yml)en el cual se define cómo se ejecutarán los contenedores de la base de datos y de Flask.
 
@@ -335,19 +308,146 @@ services:
 volumes:
   mysql_data:
 ```
+## Despliegue de la aplicación en Docker
 
-## Ejecutamos la aplicación en Docker
 
 Ahora que tenemos los archivos listos, seguimos los siguientes pasos:
 
-1. Construimos y levantamos los contenedores, haciendo que se descargue la imagen de MySQL, instalaremos dependencias en el contenedor de Flask y ejecutaremos la aplicación.
+### *Paso 1: Clonación del repositorio con los archivos*
+Hacemos una clonación del repositorio donde está la aplicación y los archivos necesarios.
 ```bash
-$ docker compose up --build
+$ git clone https://github.com/MariaRg09/App-IAW.git
+```
+### *Paso 2. Accede a la carpeta del repositorio.*
+Ahora accedemos al directorio del repositorio, en este caso **App-IAW**.
+```bash
+$ cd App-IAW
+```
+### *Paso 3: Crear Dockerfile.*
+
+Una vez dentro del directorio, creamos un **Dockerfile**. Este archivo define cómo se construirá el contenedor para la aplicación, por lo que debe estar en el mismo directorio que **app.py**.
+
+El [```Dockerfile```](Dockerfile) contendrá lo siguiente:
+```Dockerfile
+# Utilizamos una imagen base de Python (versión 3.9 en este ejemplo)
+FROM python:3.9-slim
+
+# Establecer el directorio de trabajo en el contenedor
+WORKDIR /app
+
+# Copiar el archivo de dependencias e instalar
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar todo el código de la aplicación
+COPY . .
+
+# Exponer el puerto en el que se ejecutará la aplicación (ajusta según tu app)
+EXPOSE 8000
+
+# Comando para iniciar la aplicación (asegúrate de que "app.py" sea el entry point y defina la variable "app")
+CMD ["python", "app.py"]
+```
+### *Paso 4: Construir la imagen Docker.*
+
+Realizado los pasos anteriores, vamos a construir la imagen. Para ello, es necesario irnos a la consola ya con la ruta de la aplicaión para lanzar el siguiente comando  ```docker build -t nombre_de_usuario_de_github/nombre_del_repositorio .``` , en este caso sería asi:
+
+```bash
+$ docker build -t alvarofdz/app-iaw .
+```
+### Paso 5: Publicación en docker hub
+
+Lo primero que hay que hacer es crear una cuenta en https://hub.docker.com. Una vez la tengas, en la consola escribe el siguiente comando para iniciar sesión.
+
+```bash
+$ docker login
 ```
 
-2. Accedemos a la aplicación en un navegador:
-```arduino
-http://localhost:5000
+Luego, utilizamos el comando docker push para subir la imagen. La sintasis del comando es ```docker push nombre_de_usuario_de_Github/nombre_del_repositorio```. Por ejemplo, en nuestro caso sería así: 
+
+```bash 
+$ docker push alvarofdz/app-iaw
+```
+El proceso puede durar unos instantes hasta que complete.
+
+Cuando haya terminado el proceso, puedes ver en la página de [hub.docker.com](https://hub.docker.com) que tu imagen acaba de ser publicada.
+
+## Despliegue de la aplicación en PyhtonAnywhere
+
+Para poder desplegar la aplicación en PythonAnywhere, creamos una cuenta en la pagina web de [PyhtonAnywhere](https://www.pythonanywhere.com) y vamos a usar el **Beginner** que es gratuito.
+
+
+### *Creación de una nueva aplicación web*
+
+En el apartado **Web** le damos a *Añadir una nueva aplicación web*.
+
+Luego, nos saldrá *Selecciona un framework web de Python* elegimos la opción de ```Flask```.
+
+Después, tendremos que *Elegir una version de Python*. Escogeis la que querais pero es mejor la versión ```Python 3.10``` al ser la más reciente en la lista.
+
+A continuación, tendremos que guardarla en una **ruta**. Aquí, elegiremos una ruta válida para  la aplicación con el extensión ```.py```
+
+***NOTA:** Si la ruta ya existe, el contenido será reescrito con la de la nueva app.*
+
+### *Despliegue de nuestra aplicación*
+
+En la pestaña **Consoles** podemos abrir consolas con las posibles consolas python, bash o  mysql. 
+
+Vamos a abrir una consola ```bash``` para comenzar el despliegue. Una vez dentro, seguimos esto pasos.
+
+### *Paso 1: clonar nuestro repositorio*
+
+Primero, es importante que copiemos el **enlace HTTP** del repositorio de GitHub para realizar el git clone.
+
+```bash
+$ git clone https://github.com/MariaRg09/App-IAW.git
 ```
 
+### *Paso 2: Configurar el entorno virtual*
 
+Una vez clonado el repositorio donde está todo, accedemos a el y creamos un entorno virtual llamado env-taquillas.
+```bash
+$ python3.10 -m venv env-taquillas
+```
+Activamos el entorno.
+
+```bash
+$ source env-taquillas/bin/activate
+```
+
+E instalamos las librerías y módulos que harán falta a traves del requirement del repositorio.
+
+```bash
+(env-taquillas)
+$ pip install -r requirements.txt
+```
+
+### *Paso 3:Configurar el archivo WSGI*
+
+PythonAnywhere utiliza un archivo WSGI para arrancar la aplicación. Debemos editarlo para apuntar a nuestra aplicación.
+
+En la pestaña **Web** en la sección Code, editamos los apartados de **Source Code** y **Working directory**. 
+
+En **Source Code** tiene que estar la ruta donde se encuentra la aplicacion, es decir, ruta/directorio/app.py y en **Working Directory** la ruta del directorio donde está la aplicacion, es decir, /ruta/directorio_de_la_aplicacion.
+
+En **WSGI configuration file** tiene que estar definido el directorio donde se encuentra nuestra aplicación. Para ello, editamos la línea:
+
+```python
+from flask_app import app as application
+```
+En nuestro caso cambiamos el nombre de “flask_app” por “app”.
+
+### *Paso 4: Conectar a la base de dats*
+
+En la pestaña **Databases** del dashboard, vamos a crear una base de datos mysql.
+ 
+Antes, introducimos una contraseña para iniciar un servidor MySQL.
+
+Una vez que hemos iniciado el servidor MySLQ, podremos crear la base de datos.
+
+### *Paso 5: Verificar el despliegue*
+
+Para visualizar el despliegue de la aplicación, tendremos que poner en el navegador ```https://username.pythonanywhere.com```, en mi caso:
+```html
+https://aferesc.pythonanywhere.com/
+```
