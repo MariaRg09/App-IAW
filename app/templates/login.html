@@ -2,14 +2,18 @@
 
 {% block content %}
 <h2>Login</h2>
-    <form method="post">
-        <p><input type=text placeholder=username name=username>
-        <p><input type=password placeholder=password name=password>
-        <p><input type=submit value=Login>
-    </form>
-    {% if mensaje %}
-    <div>
-        {{ mensaje }}
-    </div>
-    {% endif %}
+<form action="{{ url_for('login') }}" method="POST">
+    <label for="nombre">Usuario:</label>
+    <input type="text" name="nombre" required>
+
+    <label for="contraseña">Contraseña:</label>
+    <input type="password" name="contraseña" required>
+
+    <button type="submit">Iniciar sesión</button>
+</form>
+{% if mensaje %}
+<div>
+    {{ mensaje }}
+</div>
+{% endif %}
 {% endblock %}
