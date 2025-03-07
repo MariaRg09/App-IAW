@@ -1,19 +1,25 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2>Login</h2>
-<form action="{{ url_for('login') }}" method="POST">
-    <label for="nombre">Usuario:</label>
-    <input type="text" name="nombre" required>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
 
-    <label for="contraseña">Contraseña:</label>
-    <input type="password" name="contraseña" required>
+<div class="login-container">
+    <h2>Login</h2>
+    <form action="{{ url_for('login') }}" method="POST">
+        <label for="nombre">Usuario:</label>
+        <input type="text" name="nombre" required>
 
-    <button type="submit">Iniciar sesión</button>
-</form>
-{% if mensaje %}
-<div>
-    {{ mensaje }}
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" name="contraseña" required>
+
+        <button type="submit">Iniciar sesión</button>
+    </form>
+    {% if mensaje %}
+    <div class="mensaje-error">
+        {{ mensaje }}
+    </div>
+    {% endif %}
 </div>
-{% endif %}
 {% endblock %}

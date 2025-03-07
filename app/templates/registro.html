@@ -1,37 +1,44 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2>Registro de Usuario</h2>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-    <ul>
-        {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-{% endwith %}
-<form action="/registro" method="post">
-    <div>
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" required>
-    </div>
-    <div>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required>
-    </div>     
-    <div>
-        <label for="contraseña">Contraseña:</label>
-        <input type="password" id="contraseña" name="contraseña" required>
-    </div>
-    <div>
-        <button type="submit">Registrar</button>
-    </div>
-    {% if mensaje %}
-    <div>
-        {{ mensaje }}
-    </div>
+<div class="registro-container">
+    <h2>Registro de Usuario</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flash-messages">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
-</form>
+    {% endwith %}
+
+    <form action="/registro" method="post">
+        <div>
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>     
+        <div>
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña" required>
+        </div>
+        <div>
+            <button type="submit">Registrar</button>
+        </div>
+        {% if mensaje %}
+        <div class="mensaje-error">
+            {{ mensaje }}
+        </div>
+        {% endif %}
+    </form>
+</div>
 {% endblock %}
