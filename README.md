@@ -35,21 +35,21 @@ $ mkdir flask_mysql_app
 ```
 2. Creamos un entorno virtual llamado ```venv```:
 ```bash
-$ python3 -m venv taquillas-env
+$ python3 -m venv env-taquillas
 ```
 3. Activamos el entorno (comando en Linux):
 ```bash
-$ source taquillas-env/bin/activate
+$ source env-taquillas/bin/activate
 ```
 4. Instalamos flask, pymysql, werkzeug y jinja2:
 ```bash
-(taquillas-env)$ pip install flask pymysql 
+(env-taquillas)$ pip install flask pymysql 
 ```
 ***NOTA**: Al ejecutar este comando se instala flask, pymysql, Werkzeug,Jinja2, itsdangerous, click, blinker y MarkupSafe por predeterminado.*
 
 O bien podemos instalar los paquetes que hay dentro del archivo [requirements.txt](requirements.txt).
 ```bash
-(taquillas-env)$ pip install -r requirements.txt
+(env-taquillas)$ pip install -r requirements.txt
 ```
 ### *Paso 2: Configurar base de datos a utilizar*
 
@@ -264,7 +264,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 ```
-***NOTA:** Podemos encontrar el código COMPLETO en [app.py](app/app.py).*
+***NOTA:** Podemos encontrar el código COMPLETO en [app.py](app/app.py). También hay [plantillas](app/templates/) como login, etc*
 
 ### Paso 4: Configurar docker-compose.yml*
 
@@ -418,8 +418,7 @@ $ source env-taquillas/bin/activate
 E instalamos las librerías y módulos que harán falta a traves del requirement del repositorio.
 
 ```bash
-(env-taquillas)
-$ pip install -r requirements.txt
+(env-taquillas) $ pip install -r requirements.txt
 ```
 
 ### *Paso 3:Configurar el archivo WSGI*
